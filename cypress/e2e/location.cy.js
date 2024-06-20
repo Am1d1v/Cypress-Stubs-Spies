@@ -12,6 +12,12 @@ describe('share location', () => {
 
     // Check that getUserPosition have been called
     cy.get('@getUserPosition').should('have.been.called');
+
+    // Check that button has "disabled" attribute while sending data
+    cy.get('[data-cy="get-loc-btn"]').should('be.disabled');
+
+    // Data was succesfully fetched
+    cy.get('[data-cy="actions"]').contains('Location fetched');
   });
 
   it('should display warning message that location fetching is blocked', () => {
