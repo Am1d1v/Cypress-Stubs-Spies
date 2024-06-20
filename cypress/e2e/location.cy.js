@@ -58,6 +58,8 @@ describe('share location', () => {
     // Save navigator data to the clipboard
     cy.get('@saveToClipboard').should('have.been.called');
 
+    cy.get('@saveToClipboard').should('have.been.calledWithMatch', new RegExp(`${36}.*${45}.*${'Dima'}`));
+
   });
 
   it('should display warning message that "Your Name" input field is empty', () => {
