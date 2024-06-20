@@ -5,7 +5,18 @@ describe('share location', () => {
   it.only('should fetch the user location', () => {
     cy.visit('/').then(win => {
       // Creating stub for navigator
-      cy.stub(win.navigator.geolocation, 'getCurrentPosition').as('getUserPosition');
+      cy.stub(win.navigator.geolocation, 'getCurrentPosition')
+        .as('getUserPosition')
+          .callsFake((cb) => {
+
+            setTimeout(() => {
+              cb({coords: {
+                latitude: 36,
+                longitude: 45
+              }});
+            }, 300);
+            
+          });
     });
 
     cy.get('[data-cy="get-loc-btn"]').click();
