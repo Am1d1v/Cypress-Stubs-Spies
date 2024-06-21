@@ -21,7 +21,6 @@ describe('share location', () => {
           });
       })
       
-
       cy.stub(win.navigator.clipboard, 'writeText').as('saveToClipboard').resolves();  
     });
   })
@@ -62,7 +61,11 @@ describe('share location', () => {
     // Save navigator data to the clipboard
     cy.get('@saveToClipboard').should('have.been.called');
 
-    cy.get('@saveToClipboard').should('have.been.calledWithMatch', new RegExp(`${36}.*${45}.*${'Dima'}`));
+    cy.get('@userLocation').then(position => {
+      const {longitude, latitude} = position.coords;
+      cy.get('@saveToClipboard').should('have.been.calledWithMatch', new RegExp(`${latitude}.*${longitude}.*${'Dima'}`));
+
+    });
 
   });
 
