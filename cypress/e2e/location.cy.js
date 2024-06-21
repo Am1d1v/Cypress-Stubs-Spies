@@ -22,7 +22,14 @@ describe('share location', () => {
       })
       
       cy.stub(win.navigator.clipboard, 'writeText').as('saveToClipboard').resolves();  
+
+      // Creating spy for 'setItem' method of localStorage
+      cy.spy(win.localStorage, 'setItem');
+
+      // Creating spy for 'getItem' method of localStorage
+      cy.spy(win.localStorage, 'getItem');
     });
+
   })
 
   it('should fetch the user location', () => {
