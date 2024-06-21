@@ -3,20 +3,24 @@
 describe('share location', () => {
 
   beforeEach(() => {
+    // Get fixture data
+    cy.fixture('user-location.json').as('userLocation');
+
     cy.visit('/').then(win => {
-      // Creating stub for navigator
-      cy.stub(win.navigator.geolocation, 'getCurrentPosition')
+
+      cy.get('@userLocation').then(position => {
+        // Creating stub for navigator
+        cy.stub(win.navigator.geolocation, 'getCurrentPosition')
         .as('getUserPosition')
           .callsFake((cb) => {
 
             setTimeout(() => {
-              cb({coords: {
-                latitude: 36,
-                longitude: 45
-              }});
+              cb(position);
             }, 300);
-            
+
           });
+      })
+      
 
       cy.stub(win.navigator.clipboard, 'writeText').as('saveToClipboard').resolves();  
     });
