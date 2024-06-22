@@ -3,6 +3,7 @@
 describe('share location', () => {
 
   beforeEach(() => {
+    cy.clock();
     // Get fixture data
     cy.fixture('user-location.json').as('userLocation');
 
@@ -86,6 +87,13 @@ describe('share location', () => {
     // Check that 'URL copied to clipboard' message appears
     cy.get('[data-cy="info-message"]').should('be.visible');
     cy.get('[data-cy="info-message"]').should('have.class', 'visible')
+
+    // Simulate that 2 seconds passed
+    cy.tick(2000)
+ 
+    // Check that 'URL copied to clipboard' message disappears 
+    cy.get('[data-cy="info-message"]').should('not.be.visible');
+    cy.get('[data-cy="info-message"]').should('not.have.class', 'visible')
 
   });
 
