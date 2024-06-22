@@ -83,6 +83,10 @@ describe('share location', () => {
     // Stored location URL copied to clipboard
     cy.get('@getStoredLocation').should('have.been.called');
 
+    // Check that 'URL copied to clipboard' message appears
+    cy.get('[data-cy="info-message"]').should('be.visible');
+    cy.get('[data-cy="info-message"]').should('have.class', 'visible')
+
   });
 
   it('should display warning message that "Your Name" input field is empty', () => {
